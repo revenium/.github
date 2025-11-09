@@ -1,8 +1,8 @@
 # Revenium
 
-**FinOps for AI Solutions - Control Your Costs. Optimize Spend. Build and Bill New Products.**
+**The system of record for AI economics**
 
-Revenium helps you bring visibility, accountability, and control to your AI and digital product costs. Our APIs power a full-stack usage-based billing and FinOps platform that tracks every transaction, API call, and AI inference with cost, performance, and usage context.
+Revenium helps you bring visibility, accountability, and control to your AI and digital product costs. Our APIs power a full-stack usage-based billing platform that tracks every transaction, API call, and AI inference with cost, performance, and usage context.
 
 ## What We Do
 
@@ -22,7 +22,7 @@ Revenium helps you bring visibility, accountability, and control to your AI and 
 ## Get Started
 
 - **[Documentation](https://docs.revenium.io)** - Complete API reference and integration guides
-- **[Website](https://www.revenium.io)** - Learn more about our platform and see customer stories
+- **[Website](https://www.revenium.ai)** - Learn more about our platform and see customer stories
 
 ## Trusted By
 
