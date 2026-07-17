@@ -40,5 +40,4 @@ If a repository has none of these, it's one of our supported products.
 
 ---
 
-*Have a Labs project you'd like to see graduate into a supported product? Tell us:
-adoption and feedback are exactly how that happens.*
+*Have a Labs project you'd like to see graduate into a supported product? Please let us know.
