@@ -29,6 +29,16 @@ starting point, and you may need to finish it for your own environment.
   you** to make a Labs project fit your use case. Or
   [come talk to us on Discord](https://discord.gg/J2DbmjZ2nA).
 
+## Getting help and reporting problems
+
+Labs projects do not have active product support or an SLA. For routine questions, bug
+reports, and feature ideas, [open a GitHub issue](https://github.com/revenium) in the relevant
+repository or [talk with us on Discord](https://discord.gg/J2DbmjZ2nA).
+
+If you discover a security vulnerability, do not report it in a public issue. Use the
+repository's private GitHub security advisory process when it is available; otherwise email
+[security@revenium.io](mailto:security@revenium.io).
+
 ## How to recognize a Labs project
 
 Every Revenium Labs repository carries:
