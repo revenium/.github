@@ -1,0 +1,64 @@
+name: Revenium key scan
+
+# Required on every org repo by the "Revenium key scan" organization ruleset.
+# Scans only the commits a pull request (or merge-queue group) adds and fails
+# only on Revenium API keys; other gitleaks findings are reported, not blocking.
+
+on:
+  pull_request:
+  merge_group:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Revenium key scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository under review
+        uses: actions/checkout@v4
+        with:
+          # Range selection needs the base, the head and their merge base.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Checkout scanner at the required revision
+        uses: actions/checkout@v4
+        with:
+          repository: revenium/.github
+          # Falls back to main only if the runner does not expose the workflow's own revision.
+          ref: ${{ job.workflow_sha || 'main' }}
+          path: .revenium-key-scan
+          sparse-checkout: secret-scan
+          persist-credentials: false
+
+      - name: Show scanner revision
+        env:
+          JOB_WORKFLOW_REPOSITORY: ${{ job.workflow_repository }}
+          JOB_WORKFLOW_SHA: ${{ job.workflow_sha }}
+        run: |
+          printf 'Workflow: %s@%s\n' "$JOB_WORKFLOW_REPOSITORY" "$JOB_WORKFLOW_SHA"
+          printf 'Scanner checkout: %s\n' "$(git -C .revenium-key-scan rev-parse HEAD)"
+
+      - name: Test scan range selection
+        run: .revenium-key-scan/secret-scan/select-range.test.sh
+
+      - name: Test Revenium key rules
+        run: .revenium-key-scan/secret-scan/revenium-rules.test.sh
+
+      - name: Select commits to scan
+        id: range
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          MG_BASE_SHA: ${{ github.event.merge_group.base_sha }}
+          MG_HEAD_SHA: ${{ github.event.merge_group.head_sha }}
+        run: .revenium-key-scan/secret-scan/select-range.sh
+
+      - name: Scan for Revenium API keys
+        env:
+          COMMIT_RANGE: ${{ steps.range.outputs.commit_range }}
+        run: .revenium-key-scan/secret-scan/run.sh
